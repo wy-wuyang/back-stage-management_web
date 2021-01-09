@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <div class="container">
-      <h1 class="title">XX在线</h1>
-      <p class="lead">专注线上教育，用心做课程，用心做服务!</p>
+      <h1 class="title">在线练习</h1>
+      <p class="lead">成功在于点滴的积累，集水成渊</p>
     </div>
   </div>
 </template>
