@@ -43,6 +43,12 @@ export default {
     return {
       items: [
         {
+          icon: "fa-users",
+          name: "用户管理",
+          path: "userinfo",
+          children: [{ path: "userinfo", name: "用户列表" }]
+        },
+        {
           icon: "fa-money",
           name: "资金管理",
           path: "fund",
@@ -56,6 +62,14 @@ export default {
         }
       ]
     };
+  },
+  computed:{
+    user(){
+      return this.$store.getters.user;
+    }
+  },
+  mounted(){
+    console.log(this.user,"leftMenu");
   }
 };
 </script>
