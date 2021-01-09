@@ -69,7 +69,7 @@ export default {
     }
   },
   mounted(){
-    console.log(this.user,"leftMenu");
+    console.log(this.user);
   }
 };
 </script>
