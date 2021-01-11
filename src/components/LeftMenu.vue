@@ -63,12 +63,12 @@ export default {
       ]
     };
   },
-  computed:{
-    user(){
+  computed: {
+    user() {
       return this.$store.getters.user;
     }
   },
-  mounted(){
+  mounted() {
     console.log(this.user);
   }
 };

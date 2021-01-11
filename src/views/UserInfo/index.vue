@@ -14,16 +14,16 @@
       </el-table-column>
       <el-table-column label="状态" prop="status" align="center" width="100">
         <template slot-scope="scope">
-          {{ scope.row.status == 0 ? "启用" : "禁用" }}
+          {{ scope.row.status == 1 ? "启用" : "禁用" }}
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button 
+          <el-button
             size="mini"
             type="warning"
             @click="handleStatus(scope.$index, scope.row)"
-            >{{scope.row.status == 0 ? "禁用" : "启用"}}</el-button
+            >{{ scope.row.status == 1 ? "禁用" : "启用" }}</el-button
           >
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
             >编辑</el-button
@@ -46,18 +46,24 @@ export default {
   data() {
     return {
       userInfo: null,
+      name_show: true
     };
   },
-  methods:{
-      handleStatus(index,item){
-          item.status == 0 ? item.status = 1 : item.status = 0;
-      }
+  methods: {
+    handleStatus(index, item) {
+      item.status == 1 ? (item.status = 2) : (item.status = 1);
+      console.log(item);
+      this.$axios.post(`/api/users/edit/${item._id}`,item)
+      .then(res=>{
+        console.log(res);
+      })
+    }
   },
   mounted() {
-    this.$axios.get("/api/users/userinfo").then((res) => {
+    this.$axios.get("/api/users/userinfo").then(res => {
       this.userInfo = res.data;
     });
-  },
+  }
 };
 </script>
 

@@ -33,7 +33,7 @@
             type="primary"
             size="small"
             icon="view"
-            v-if="user.identity=='manager'"
+            v-if="user.identity == 'manager'"
             @click="handleAdd()"
             >添加</el-button
           >
@@ -92,7 +92,7 @@
           align="center"
           fixed="right"
           width="180"
-          v-if="user.identity=='manager'"
+          v-if="user.identity == 'manager'"
         >
           <template slot-scope="scope">
             <el-button
@@ -146,10 +146,10 @@ export default {
     return {
       tableDate: [],
       allTableDate: [],
-      filterTableDate:[],
+      filterTableDate: [],
       dialogDate: {
         show: false,
-        title: "add",
+        title: "add"
       },
       formData: {
         type: "",
@@ -158,7 +158,7 @@ export default {
         expend: "",
         cash: "",
         remark: "",
-        id: "",
+        id: ""
       },
       paginations: {
         //分页相关数据
@@ -166,21 +166,21 @@ export default {
         total: 0, //总数
         page_size: 5, //每页显示条数
         page_sizes: [5, 10, 15, 20], //每页显示多少条
-        layout: "total,sizes,prev,pager,next,jumper", //翻页属性
+        layout: "total,sizes,prev,pager,next,jumper" //翻页属性
       },
-      search_data:{
-        startTime:"",
-        endTime:"",
+      search_data: {
+        startTime: "",
+        endTime: ""
       }
     };
   },
-  computed:{
-    user(){
+  computed: {
+    user() {
       return this.$store.getters.user;
     }
   },
   components: {
-    myDialog,
+    myDialog
   },
   created() {},
   mounted() {
@@ -191,20 +191,20 @@ export default {
       // 获取表格数据
       this.$axios
         .get("/api/profiles")
-        .then((res) => {
+        .then(res => {
           this.allTableDate = res.data;
           this.filterTableDate = res.data;
           // 设置分页数据
           this.setPaginations();
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
         });
     },
     handleAdd() {
       this.dialogDate = {
         show: true,
-        title: "add",
+        title: "add"
       };
       this.formData = {
         type: "",
@@ -213,13 +213,13 @@ export default {
         expend: "",
         cash: "",
         remark: "",
-        id: "",
+        id: ""
       };
     },
     handleEdit(index, row) {
       this.dialogDate = {
         show: true,
-        title: "edit",
+        title: "edit"
       };
       this.formData = {
         type: row.type,
@@ -228,7 +228,7 @@ export default {
         expend: row.expend,
         cash: row.cash,
         remark: row.remark,
-        id: row._id,
+        id: row._id
       };
     },
     handleDelete(index, row) {
@@ -268,12 +268,12 @@ export default {
         return index < this.paginations.page_size;
       });
     },
-    handleSearch(){
+    handleSearch() {
       // 筛选功能
-      if(!this.search_data.startTime || !this.search_data.endTime){
+      if (!this.search_data.startTime || !this.search_data.endTime) {
         this.$message({
-          type:"warning",
-          message:"请选择时间区间"
+          type: "warning",
+          message: "请选择时间区间"
         });
         this.getProfile();
         return;
@@ -281,16 +281,15 @@ export default {
       const sTime = this.search_data.startTime.getTime();
       const eTime = this.search_data.endTime.getTime();
 
-
-      this.allTableDate = this.filterTableDate.filter(item=>{
+      this.allTableDate = this.filterTableDate.filter(item => {
         let date = new Date(item.date);
         let time = date.getTime();
         return time >= sTime && time <= eTime;
-      })
+      });
 
       this.setPaginations();
     }
-  },
+  }
 };
 </script>
 <style scoped>
