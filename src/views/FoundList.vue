@@ -130,16 +130,16 @@
         </el-col>
       </el-row>
     </div>
-    <my-Dialog
+    <info-Dialog
       :dialog="dialogDate"
       :formData="formData"
       @update="getProfile"
-    ></my-Dialog>
+    ></info-Dialog>
   </div>
 </template>
 
 <script>
-import myDialog from "@/components/myDialog";
+import infoDialog from "@/components/Dialogs/infoDialog";
 export default {
   name: "fundlist",
   data() {
@@ -180,7 +180,7 @@ export default {
     }
   },
   components: {
-    myDialog
+    infoDialog
   },
   created() {},
   mounted() {
@@ -218,8 +218,7 @@ export default {
     },
     handleEdit(index, row) {
       this.dialogDate = {
-        show: true,
-        title: "edit"
+        show: true
       };
       this.formData = {
         type: row.type,

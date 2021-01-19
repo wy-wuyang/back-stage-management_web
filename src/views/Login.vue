@@ -75,7 +75,12 @@ export default {
         if (valid) {
           this.$axios.post("/api/users/login", this.loginUser).then(res => {
             // token
-            // console.log(res);
+            if (res.data.result) {
+              this.$message({
+                message: "该账号已被禁用,无权登录!",
+                type: "warning"
+              });
+            }
             const { token } = res.data;
             localStorage.setItem("eleToken", token);
 

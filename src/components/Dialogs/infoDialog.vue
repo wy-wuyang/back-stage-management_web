@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  name: "myDialog",
+  name: "infoDialog",
   data() {
     return {
       format_type_list: ["现金", "微信", "支付宝", "贷款", "优惠券"],

@@ -7,7 +7,7 @@
       </el-table-column>
       <el-table-column label="邮箱" prop="email" align="center" width="200">
       </el-table-column>
-      <el-table-column label="身份" prop="email" align="center" width="200">
+      <el-table-column label="身份" prop="identity" align="center" width="200">
         <template slot-scope="scope">
           {{ scope.row.identity == "manager" ? "管理员" : "普通员工" }}
         </template>
@@ -37,32 +37,66 @@
         </template>
       </el-table-column>
     </el-table>
+    <user-Dialog 
+    :dialog="dialogDate" 
+    :formData="formData"
+    @update="getUserInfo"
+    ></user-Dialog>
   </div>
 </template>
 
 <script>
+import userDialog from "@/components/Dialogs/userDialog";
 export default {
   name: "userinfo",
   data() {
     return {
       userInfo: null,
-      name_show: true
+      name_show: true,
+      dialogDate: {
+        show: false
+      },
+      formData: {
+        name: "",
+        email: "",
+        identity: "",
+        status: "",
+        id: ""
+      }
     };
   },
   methods: {
+    getUserInfo(){
+        this.$axios.get("/api/users/userinfo")
+        .then(res => {
+          this.userInfo = res.data;
+        }).catch(err => {
+          console.log(err);
+        });
+    },
     handleStatus(index, item) {
       item.status == 1 ? (item.status = 2) : (item.status = 1);
       console.log(item);
-      this.$axios.post(`/api/users/edit/${item._id}`,item)
-      .then(res=>{
+      this.$axios.post(`/api/users/edit/${item._id}`, item).then(res => {
         console.log(res);
-      })
+      });
+    },
+    handleEdit(index, row) {
+      this.dialogDate.show = true;
+      this.formData = {
+        name: row.name,
+        email: row.email,
+        identity: row.identity,
+        status: row.status,
+        id: row._id
+      };
     }
   },
+  components: {
+    userDialog
+  },
   mounted() {
-    this.$axios.get("/api/users/userinfo").then(res => {
-      this.userInfo = res.data;
-    });
+    this.getUserInfo();
   }
 };
 </script>
@@ -70,5 +104,6 @@ export default {
 <style lang="less" scoped>
 .userinfo {
   color: red;
+  padding: 10px;
 }
 </style>
